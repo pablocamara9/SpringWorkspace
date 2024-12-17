@@ -1,6 +1,6 @@
-package com.example.monumentos;
+package com.example.monumentos.repo;
 
-import com.example.monumentos.Monumento;
+import com.example.monumentos.model.Monumento;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 

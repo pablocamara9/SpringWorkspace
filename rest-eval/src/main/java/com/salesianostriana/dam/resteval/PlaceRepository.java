@@ -18,29 +18,27 @@ public class PlaceRepository {
     @PostConstruct
     public void init() {
         // Añadir aquí datos de ejemplo
-        List<String> tags = new ArrayList<String>();
+        /*List<String> tags = new ArrayList<String>();
         tags.add("TAG 1");
         tags.add("TAG 2");
-        tags.add("TAG 3");
+        tags.add("TAG 3");*/
 
         add(Place.builder()
-                .id(1L)
                 .name("Cafetería Salesianos Triana")
                 .address("Condes de Bustillo")
                 .coords("123456, -654321")
                 .desc("Allí desayunan los que nos suspenden")
-                .tags(tags)
+                .tags(new ArrayList<>(List.of("Bueno", "Bonito", "Barato")))
                 .image("Foto")
                 .build()
         );
 
         add(Place.builder()
-                .id(2L)
                 .name("Bar Paletas")
                 .address("Condes de Bustillo")
                 .coords("98765, -56789")
                 .desc("El bar más guarro de todo Triana")
-                .tags(tags)
+                .tags(new ArrayList<>(List.of("Regulero", "Sucio", "Descuidado")))
                 .image("Foto")
                 .build()
         );

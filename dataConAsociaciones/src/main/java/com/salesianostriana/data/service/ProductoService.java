@@ -1,5 +1,6 @@
 package com.salesianostriana.data.service;
 
+import com.salesianostriana.data.dto.EditProductoDto;
 import com.salesianostriana.data.model.Producto;
 import com.salesianostriana.data.repo.ProductoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,12 +32,12 @@ public class ProductoService {
         return productoRepository.save(producto);
     }
 
-    public Producto edit(Producto producto, Long id) {
+    public Producto edit(EditProductoDto editProductoDto, Long id) {
         return productoRepository.findById(id)
                 .map(old -> {
-                    old.setNombre(producto.getNombre());
-                    old.setDescripcion(producto.getDescripcion());
-                    old.setPrecioVenta(producto.getPrecioVenta());
+                    old.setNombre(editProductoDto.nombre());
+                    old.setDescripcion(editProductoDto.descripcion());
+                    old.setPrecioVenta(editProductoDto.precio());
                     return productoRepository.save(old);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No hay producto con id " + id));

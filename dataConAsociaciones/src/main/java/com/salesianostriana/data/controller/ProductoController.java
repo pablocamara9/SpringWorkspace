@@ -1,5 +1,7 @@
 package com.salesianostriana.data.controller;
 
+import com.salesianostriana.data.dto.EditProductoDto;
+import com.salesianostriana.data.dto.GetProductoDto;
 import com.salesianostriana.data.service.ProductoService;
 import com.salesianostriana.data.model.Producto;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +19,14 @@ public class ProductoController {
     private final ProductoService productoService;
 
     @GetMapping
-    public List<Producto> getAll() {
-        return productoService.findAll();
+    public List<GetProductoDto> getAll() {
+        return productoService.findAll()
+                .stream()
+                .map(GetProductoDto::of)
+                .toList();
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public Producto getById(Long id) {
         return productoService.findById(id);
     }
@@ -33,8 +38,8 @@ public class ProductoController {
                         productoService.save(nuevo));
     }
 
-    @PutMapping("/id")
-    public Producto update(@RequestBody Producto aEditar, @PathVariable Long id) {
+    @PutMapping("/{id}")
+    public Producto update(@RequestBody EditProductoDto aEditar, @PathVariable Long id) {
         return productoService.edit(aEditar, id);
     }
 

@@ -15,10 +15,18 @@ public class MainDeMentira {
         Producto p = Producto.builder()
                 .nombre("Un producto")
                 .precioVenta(123.45)
-                .descripcion("Se trata de un producto de nuestro catálogo")
+                .descripcion("Se trata de un producto de nuestro catálogo.")
                 .build();
 
         repo.save(p);
+
+        Producto p2 = Producto.builder()
+                .nombre("Otro producto")
+                .precioVenta(999.99)
+                .descripcion("Se trata de otro producto de nuestro catálogo, bastante más caro.")
+                .build();
+
+        repo.save(p2);
     }
 
 }

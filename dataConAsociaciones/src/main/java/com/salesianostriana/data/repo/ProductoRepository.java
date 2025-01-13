@@ -1,5 +1,6 @@
-package com.salesianostriana.data;
+package com.salesianostriana.data.repo;
 
+import com.salesianostriana.data.model.Producto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductoRepository

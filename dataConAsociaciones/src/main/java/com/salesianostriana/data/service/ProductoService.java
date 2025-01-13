@@ -1,11 +1,12 @@
-package com.salesianostriana.data;
+package com.salesianostriana.data.service;
 
+import com.salesianostriana.data.model.Producto;
+import com.salesianostriana.data.repo.ProductoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

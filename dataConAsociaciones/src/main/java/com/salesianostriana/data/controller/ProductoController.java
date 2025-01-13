@@ -1,5 +1,7 @@
-package com.salesianostriana.data;
+package com.salesianostriana.data.controller;
 
+import com.salesianostriana.data.service.ProductoService;
+import com.salesianostriana.data.model.Producto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

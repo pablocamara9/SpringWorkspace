@@ -1,4 +1,4 @@
-package com.salesianostriana.data;
+package com.salesianostriana.data.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,6 +28,11 @@ public class Producto {
 
     @Column(length = 255)
     private String descripcion;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id",
+            foreignKey = @ForeignKey(name = "fk_producto_categoria"))
+    private Categoria categoria;
 
     @Override
     public final boolean equals(Object o) {

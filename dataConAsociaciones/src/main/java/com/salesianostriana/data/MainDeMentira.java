@@ -17,7 +17,10 @@ public class MainDeMentira {
 
     @PostConstruct
     public void run() {
-        Categoria c = categoriaRepository.getReferenceById(1L);
+        Categoria c = Categoria.builder()
+                .nombre("Categoría 1")
+                .build();
+        categoriaRepository.save(c);
 
         Producto p = Producto.builder()
                 .nombre("Un producto")
@@ -27,6 +30,7 @@ public class MainDeMentira {
                 .build();
 
         repo.save(p);
+        c.addProducto(p);
 
         Producto p2 = Producto.builder()
                 .nombre("Otro producto")
@@ -36,6 +40,12 @@ public class MainDeMentira {
                 .build();
 
         repo.save(p2);
+        c.addProducto(p2);
+
+        // Para comprobar
+        /*System.out.println("Productos de la Categoría 1");
+        System.out.println(c.getProductos());*/
+
     }
 
 }

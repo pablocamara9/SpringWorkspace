@@ -1,5 +1,6 @@
 package com.salesianostriana.data.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -25,6 +26,8 @@ public class Categoria {
 
     @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
     @Builder.Default
+    @ToString.Exclude
+    @JsonManagedReference
     private List<Producto> productos = new ArrayList<>();
 
     @Override
@@ -42,4 +45,17 @@ public class Categoria {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
+
+    // Métodos helper
+    public void addProducto(Producto p) {
+        p.setCategoria(this);
+        this.getProductos().add(p);
+    }
+
+    public void removeProducto(Producto p) {
+        this.getProductos().remove(p);
+        p.setCategoria(null);
+    }
+
+
 }

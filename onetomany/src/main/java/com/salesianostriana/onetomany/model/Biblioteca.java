@@ -27,7 +27,7 @@ public class Biblioteca {
     private String direccion;
     private String telefono;
 
-    @OneToMany(mappedBy = "libro", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "biblioteca", fetch = FetchType.EAGER)
     @Builder.Default
     @ToString.Exclude
     @JsonManagedReference

@@ -35,9 +35,15 @@ public class MainDeMentira {
                 .build();
 
         Libro l3 = Libro.builder()
-                .titulo("Como tener el pelo más fuerte")
+                .titulo("Pelo más fuerte en tan solo 1 mes")
                 .autor("Carlos Ruiz López")
                 .build();
+
+        /*libroRepo.save(l1);
+        libroRepo.save(l2);
+        libroRepo.save(l3);*/
+
+        bibliotecaRepo.save(b);
 
         b.addLibro(l1);
         b.addLibro(l2);
@@ -47,6 +53,6 @@ public class MainDeMentira {
         libroRepo.save(l2);
         libroRepo.save(l3);
 
-        bibliotecaRepo.save(b);
+        //bibliotecaRepo.save(b);
     }
 }

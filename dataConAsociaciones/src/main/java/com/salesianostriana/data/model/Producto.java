@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -35,6 +37,15 @@ public class Producto {
             foreignKey = @ForeignKey(name = "fk_producto_categoria"))
     @JsonBackReference
     private Categoria categoria;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "producto_tag",
+            joinColumns = @JoinColumn(name = "producto_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"),
+            foreignKey = @ForeignKey(name = "fk_producto_tag_producto"),
+            inverseForeignKey = @ForeignKey(name = "fk_producto_tag_tag"))
+    @Builder.Default
+    private Set<Tag> tags = new HashSet<>();
 
     @Override
     public final boolean equals(Object o) {

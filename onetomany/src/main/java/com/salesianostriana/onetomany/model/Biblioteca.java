@@ -33,6 +33,17 @@ public class Biblioteca {
     @JsonManagedReference
     private List<Libro> libros = new ArrayList<>();
 
+    // Métodos helper
+    public void addLibro(Libro libro) {
+        libro.setBiblioteca(this);
+        this.libros.add(libro);
+    }
+
+    public void removeLibro(Libro libro) {
+        this.libros.remove(libro);
+        libro.setBiblioteca(null);
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

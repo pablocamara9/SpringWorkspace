@@ -1,9 +1,6 @@
 package com.salesianostriana.ejercicio02_02.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -16,6 +13,7 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@IdClass(VideoPk.class)
 public class Video {
 
     @Id
@@ -27,6 +25,7 @@ public class Video {
     private String descripcion;
     private String url;
 
+    @Id
     @ManyToOne
     private CursoOnline cursoOnline;
 

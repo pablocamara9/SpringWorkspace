@@ -34,6 +34,17 @@ public class CursoOnline {
     @JsonManagedReference
     private List<Video> videos = new ArrayList<>();
 
+    // Métodos helper
+    public void addVideo(Video video){
+        video.setCursoOnline(this);
+        videos.add(video);
+    }
+
+    public void removeVideo(Video video){
+        videos.remove(video);
+        video.setCursoOnline(null);
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

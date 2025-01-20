@@ -28,7 +28,9 @@ public class CursoOnline {
     @ManyToOne
     private Profesor profesor;
 
-    @OneToMany(mappedBy = "cursoOnline", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cursoOnline",
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude
     @JsonManagedReference

@@ -1,9 +1,7 @@
 package com.salesianostriana.herencia.util;
 
-import com.salesianostriana.herencia.model.Alumno;
-import com.salesianostriana.herencia.model.Persona;
-import com.salesianostriana.herencia.repo.AlumnoRepo;
-import com.salesianostriana.herencia.repo.PersonaRepo;
+import com.salesianostriana.herencia.model.*;
+import com.salesianostriana.herencia.repo.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,11 +12,14 @@ public class MainDeMentira {
 
     private final PersonaRepo personaRepo;
     private final AlumnoRepo alumnoRepo;
+    private final UsuarioRepo usuarioRepo;
+    private final AdminRepo adminRepo;
+    private final ClienteRepo clienteRepo;
 
     @PostConstruct
     public void init() {
 
-        // ALUMNO (PERSONA)
+        // JOINED (ALUMNO - PERSONA)
         Alumno a1 = Alumno.builder()
                 .dni("12345678A")
                 .nombre("Paco")
@@ -38,7 +39,27 @@ public class MainDeMentira {
         alumnoRepo.save(a1);
         alumnoRepo.save(a2);
 
-        //
+        // SINGLE TABLE (USUARIO - ADMIN Y CLIENTE)
+        Admin admin = Admin.builder()
+                .nombre("Admin")
+                .username("admin")
+                .password("admin")
+                .build();
+
+        Cliente c1 = Cliente.builder()
+                .nombre("Jose Rafael Alexander")
+                .username("joserafalex")
+                .password("1234")
+                .build();
+
+        Cliente c2 = Cliente.builder()
+                .nombre("Carlos Pérez")
+                .password("4321")
+                .build();
+
+        adminRepo.save(admin);
+        clienteRepo.save(c1);
+        clienteRepo.save(c2);
 
     }
 }

@@ -2,6 +2,7 @@ package com.salesianostriana.herencia.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -12,9 +13,9 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Persona {
+public abstract class Persona {
 
     @Id
     @GeneratedValue

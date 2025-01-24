@@ -7,10 +7,10 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-//@SuperBuilder
+@SuperBuilder
 public class Alumno extends Persona {
 
     private double notaMedia;

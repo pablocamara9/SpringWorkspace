@@ -1,4 +1,4 @@
-package com.salesianostriana.ejemploCompletoSeguridad.jwt.access;
+package com.salesianostriana.ejemploCompletoSeguridad.security.exceptionhandling;
 
 public class JwtException extends RuntimeException {
 

@@ -1,6 +1,7 @@
-package com.salesianostriana.ejemploCompletoSeguridad.jwt.access;
+package com.salesianostriana.ejemploCompletoSeguridad.security.jwt.access;
 
 import com.salesianostriana.ejemploCompletoSeguridad.model.User;
+import com.salesianostriana.ejemploCompletoSeguridad.security.exceptionhandling.JwtException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -33,7 +34,8 @@ public class JwtService {
 
     @PostConstruct
     public void init() {
-        secretKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        //secretKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         jwtParser = Jwts.parser()
                 .verifyWith(secretKey)
                 .build();

@@ -1,6 +1,8 @@
 package com.salesianostriana.ejemploCompletoSeguridad.security;
 
-import com.salesianostriana.ejemploCompletoSeguridad.jwt.access.JwtAuthenticationFilter;
+import com.salesianostriana.ejemploCompletoSeguridad.security.exceptionhandling.JwtAccessDeniedHandler;
+import com.salesianostriana.ejemploCompletoSeguridad.security.exceptionhandling.JwtAuthenticationEntrypoint;
+import com.salesianostriana.ejemploCompletoSeguridad.security.jwt.access.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +27,8 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationEntrypoint authenticationEntrypoint;
+    private final JwtAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -55,8 +59,12 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults());
         http.sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.exceptionHandling(excepz -> excepz
+                .accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(authenticationEntrypoint));
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
+                .requestMatchers("/me/admin").hasRole("ADMIN")
                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -6,6 +6,8 @@ import com.salesianostriana.ejemploCompletoSeguridad.dto.UserResponse;
 import com.salesianostriana.ejemploCompletoSeguridad.security.jwt.access.JwtService;
 import com.salesianostriana.ejemploCompletoSeguridad.model.User;
 import com.salesianostriana.ejemploCompletoSeguridad.security.jwt.access.refresh.RefreshToken;
+import com.salesianostriana.ejemploCompletoSeguridad.security.jwt.access.refresh.RefreshTokenRepository;
+import com.salesianostriana.ejemploCompletoSeguridad.security.jwt.access.refresh.RefreshTokenRequest;
 import com.salesianostriana.ejemploCompletoSeguridad.security.jwt.access.refresh.RefreshTokenService;
 import com.salesianostriana.ejemploCompletoSeguridad.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +31,12 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @PostMapping("/auth/register")
     public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest createUserRequest) {
         User user = userService.createUser(createUserRequest);
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(UserResponse.of(user));
     }
@@ -55,10 +59,18 @@ public class UserController {
         String accessToken = jwtService.generateAccessToken(user);
 
         // Generar el token de refresco
-        String refreshToken = refreshTokenService.create(user).getToken();
+        RefreshToken refreshToken = refreshTokenService.create(user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(UserResponse.of(user, accessToken, refreshToken));
+                .body(UserResponse.of(user, accessToken, refreshToken.getToken()));
+    }
+
+    @PostMapping("/auth/refresh/token")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest req) {
+        String token = req.refreshToken();
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(refreshTokenService.refreshToken(token));
     }
 
     @GetMapping("/me")

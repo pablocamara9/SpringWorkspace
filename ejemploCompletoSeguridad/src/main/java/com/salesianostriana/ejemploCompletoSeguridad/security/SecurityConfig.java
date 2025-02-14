@@ -60,14 +60,23 @@ public class SecurityConfig {
         http.sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.exceptionHandling(excepz -> excepz
+                .authenticationEntryPoint(authenticationEntrypoint)
                 .accessDeniedHandler(accessDeniedHandler)
-                .authenticationEntryPoint(authenticationEntrypoint));
+        );
+
         http.authorizeHttpRequests(authz -> authz
-                .requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login", "/auth/refresh/token").permitAll()
                 .requestMatchers("/me/admin").hasRole("ADMIN")
-                .anyRequest().authenticated());
+                .requestMatchers("h2-console/**").permitAll()
+                .anyRequest().authenticated()
+        );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.headers(headers ->
+                headers.frameOptions(frameOptions ->
+                        frameOptions.disable()));
+
 
         return http.build();
     }

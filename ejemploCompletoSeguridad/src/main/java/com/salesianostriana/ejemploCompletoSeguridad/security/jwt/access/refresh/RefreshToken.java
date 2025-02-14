@@ -18,23 +18,26 @@ import java.util.UUID;
 public class RefreshToken {
 
     @Id
+    @GeneratedValue
     private UUID id;
 
-    @MapsId
+    //@MapsId
     @OneToOne
-    @JoinColumn(name = "user_id", columnDefinition = "uuid")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @NaturalId
+    /*@NaturalId
     @Column(nullable = false, unique = true)
-    private String token;
-
-    @Builder.Default
-    private Instant createdAt = Instant.now();
+    private String token;*/
 
     @Column(nullable = false)
     private Instant expireAt;
 
+    @Builder.Default
+    private Instant createdAt = Instant.now();
 
+    public String getToken() {
+        return id.toString();
+    }
 
 }

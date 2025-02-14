@@ -41,29 +41,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = getJwtAccessTokenFromRequest(request);
 
         try {
+            // Validar el token
+            // Si es válido, autenticar al usuario
+            if(StringUtils.hasText(token) && jwtService.validateAccessToken(token)) {
+                UUID id = jwtService.getUserIdFromAccessToken(token);
+                Optional<User> optUser = userRepository.findById(id);
 
+                if(optUser.isPresent()) {
+                    User user = optUser.get();
+                    UsernamePasswordAuthenticationToken authenticationToken
+                            = new UsernamePasswordAuthenticationToken(
+                                user,
+                                null,
+                                user.getAuthorities()
+                    );
 
-
-        // Validar el token
-        // Si es válido, autenticar al usuario
-        if(StringUtils.hasText(token) && jwtService.validateAccessToken(token)) {
-            UUID id = jwtService.getUserIdFromAccessToken(token);
-            Optional<User> optUser = userRepository.findById(id);
-
-            if(optUser.isPresent()) {
-                User user = optUser.get();
-                UsernamePasswordAuthenticationToken authenticationToken
-                        = new UsernamePasswordAuthenticationToken(
-                            user,
-                            null,
-                            user.getAuthorities()
-                );
-
-                authenticationToken.setDetails(new WebAuthenticationDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    authenticationToken.setDetails(new WebAuthenticationDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
             }
-        }
-
         } catch(JwtException ex) {
             resolver.resolveException(request, response, null, ex);
         }

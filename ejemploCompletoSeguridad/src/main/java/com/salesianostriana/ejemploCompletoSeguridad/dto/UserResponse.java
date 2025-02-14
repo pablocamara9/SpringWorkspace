@@ -26,12 +26,12 @@ public record UserResponse(
         );
     }
 
-    public static UserResponse of(User user, String accessToken, String RefreshAccessToken) {
+    public static UserResponse of(User user, String accessToken, String refreshAccessToken) {
         return new UserResponse(
                 user.getId(),
                 user.getUsername(),
                 accessToken,
-                RefreshAccessToken
+                refreshAccessToken
         );
     }
 }
